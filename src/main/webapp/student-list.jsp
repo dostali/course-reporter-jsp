@@ -1,14 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="az.bdc.coursereporterjsp.domain.Student" %>
-<%--<%@ page import="static jdk.internal.org.jline.reader.impl.LineReaderImpl.CompletionType.List" %>--%>
-<%--
-  Created by IntelliJ IDEA.
-  User: tural
-  Date: 10/25/2023
-  Time: 4:29 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,7 +19,6 @@
     <h1>Student Management</h1>
     <h2>
         <a href="/new">Add New Student</a>
-        <a href="/list">List All Students</a>
     </h2>
 </div>
 <div style="display:flex; justify-content:center; align-items: center">
@@ -38,8 +29,9 @@
             <th>Name</th>
             <th>Phone number</th>
             <th>Update date</th>
+            <th>Actions</th>
         </tr>
-        <% List studentList = (ArrayList) request.getAttribute("studentList");
+        <% List studentList = (ArrayList) request.getAttribute("students");
             for (int i = 0; i < studentList.size(); i++){%>
 
         <tr>
