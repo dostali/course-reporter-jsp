@@ -12,8 +12,9 @@ public abstract class DatabaseConnection {
 
     public Connection connect(){
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
