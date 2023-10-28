@@ -15,7 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "studentServlet", value = "/")
+@WebServlet(name = "studentServlet", value = "/students/*")
 public class StudentsServlet extends HttpServlet {
     StudentService studentService = new StudentServiceImpl();
 
@@ -28,8 +28,7 @@ public class StudentsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getServletPath();
-        System.out.println("ACTION: " + action);
+        String action = request.getPathInfo();
 
         try {
             switch (action) {
@@ -48,8 +47,11 @@ public class StudentsServlet extends HttpServlet {
                 case "/update":
                     updateStudent(request, response);
                     break;
-                default:
+                case "/list":
                     listStudents(request, response);
+                    break;
+                default:
+                    request.getRequestDispatcher("/not-found");
                     break;
             }
         } catch (SQLException ex) {
@@ -60,13 +62,13 @@ public class StudentsServlet extends HttpServlet {
     private void listStudents(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         List<Student> students = studentService.getAll();
         request.setAttribute("students", students);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student-list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/student-list.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("action", "insert");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/student-form.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -76,7 +78,7 @@ public class StudentsServlet extends HttpServlet {
         request.setAttribute("id", id);
         request.setAttribute("student", existingStudent);
         request.setAttribute("action", "update");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/student-form.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -108,7 +110,7 @@ public class StudentsServlet extends HttpServlet {
         newStudent.setCreateDate(dateNow);
         newStudent.setUpdateDate(dateNow);
         studentService.add(newStudent);
-        response.sendRedirect("/list");
+        response.sendRedirect("/students/list");
     }
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -138,12 +140,12 @@ public class StudentsServlet extends HttpServlet {
         currentStudent.setPinCode(pincode);
         currentStudent.setUpdateDate(dateNow);
         studentService.update(currentStudent);
-        response.sendRedirect("/list");
+        response.sendRedirect("/students/list");
     }
 
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         long id = Long.parseLong(request.getParameter("id"));
         studentService.deleteById(id);
-        response.sendRedirect("list");
+        response.sendRedirect("/students/list");
     }
 }
