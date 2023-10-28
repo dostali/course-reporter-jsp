@@ -1,9 +1,9 @@
 package az.bdc.coursereporterjsp.service.impl;
 
-import az.bdc.courserepoterjsp.constant.SqlCommands;
-import az.bdc.courserepoterjsp.domain.Student;
-import az.bdc.courserepoterjsp.service.DatabaseConnection;
-import az.bdc.courserepoterjsp.service.StudentService;
+import az.bdc.coursereporterjsp.constant.SqlCommands;
+import az.bdc.coursereporterjsp.domain.Student;
+import az.bdc.coursereporterjsp.service.DatabaseConnection;
+import az.bdc.coursereporterjsp.service.StudentService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,7 +71,8 @@ public class StudentServiceImpl extends DatabaseConnection implements StudentSer
             preparedStatement.setObject(4, student.getBirthDate());
             preparedStatement.setString(5, student.getPhoneNumber());
             preparedStatement.setString(6, student.getPinCode());
-            preparedStatement.setObject(7, student.getId());
+            preparedStatement.setObject(7, student.getUpdateDate());
+            preparedStatement.setLong(8, student.getId());
             return preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,6 +86,31 @@ public class StudentServiceImpl extends DatabaseConnection implements StudentSer
             PreparedStatement preparedStatement = connection.prepareStatement(SqlCommands.Student.DELETE_BY_ID);
             preparedStatement.setLong(1, id);
             return preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Student getOne(long id) {
+        try (Connection connection = connect()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SqlCommands.Student.GET_BY_ID);
+            preparedStatement.setLong(1, id);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            resultSet.next();
+            Student student = new Student();
+            student.setId(resultSet.getLong("id"));
+            student.setName(resultSet.getString("name"));
+            student.setSurname(resultSet.getString("surname"));
+            student.setFullName();
+            student.setBirthDate(resultSet.getDate("birthdate"));
+            student.setPhoneNumber(resultSet.getString("phone_number"));
+            student.setPinCode(resultSet.getString("pincode"));
+            student.setCreateDate(resultSet.getObject("create_date", LocalDateTime.class));
+            student.setUpdateDate(resultSet.getObject("update_date", LocalDateTime.class));
+            return student;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());

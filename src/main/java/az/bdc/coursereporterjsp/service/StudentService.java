@@ -1,6 +1,6 @@
 package az.bdc.coursereporterjsp.service;
 
-import az.bdc.courserepoter.domain.Student;
+import az.bdc.coursereporterjsp.domain.Student;
 
 import java.util.List;
 
@@ -14,5 +14,6 @@ public interface StudentService {
 
     boolean deleteById(long id);
 
+    Student getOne(long id);
 
 }

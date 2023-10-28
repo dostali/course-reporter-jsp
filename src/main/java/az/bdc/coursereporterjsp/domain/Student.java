@@ -17,7 +17,6 @@ public class Student {
     public Student(long id,
                    String name,
                    String surname,
-                   String fullName,
                    Date birthDate,
                    String phoneNumber,
                    String pinCode,
@@ -27,7 +26,7 @@ public class Student {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.fullName = fullName;
+        this.fullName = this.name + " " + this.surname;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.pinCode = pinCode;
