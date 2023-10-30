@@ -11,7 +11,7 @@
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column">
     <h1>Books Management</h1>
     <h2>
-        <a href="/list">List All Books</a>
+        <a href="/students/list">List All Books</a>
     </h2>
 </div>
 <div style="align-items: center">
@@ -23,7 +23,7 @@
         String action = request.getAttribute("action").toString();
     %>
 
-    <form action="<%=action%>" method="post">
+    <form action="/students/<%=action%>" method="post">
         <table style="border: 1px; padding: 5px">
             <caption>
                 <h2> <%= action.equals("update") ? "Edit Student" : "Add New Student" %> </h2>
