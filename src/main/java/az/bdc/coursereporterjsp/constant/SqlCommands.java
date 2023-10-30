@@ -10,6 +10,13 @@ public final class SqlCommands {
         public final static String GET_BY_ID = "select * from students where id=?";
 
     }
+    public static class Teacher {
+        public final static String SELECT_ALL = "select * from teacher";
+        public final static String INSERT_INTO = "insert into teachers(name, surname, fullname, birthdate, phone_number, create_date, update_date) values(?,?,?,?,?,?,?)";
+        public final static String DELETE_BY_ID = "delete from teachers where id=?";
+        public final static String UPDATE_SET = "update teachers set name=?, surname=?, fullname=?, birthdate=?, phone_number=?, update_date=? where id = ?";
+        public final static String GET_BY_ID = "select * from teachers where id=?";
 
+    }
 }
 

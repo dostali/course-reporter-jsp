@@ -1,27 +1,31 @@
 package az.bdc.coursereporterjsp;
 
-import java.io.*;
+import az.bdc.coursereporterjsp.domain.Teacher;
+import az.bdc.coursereporterjsp.service.TeacherService;
+import az.bdc.coursereporterjsp.service.impl.TeacherServiceImpl;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import az.bdc.coursereporterjsp.domain.Student;
-import az.bdc.coursereporterjsp.service.StudentService;
-import az.bdc.coursereporterjsp.service.impl.StudentServiceImpl;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "studentServlet", value = "/students/*")
-public class StudentsServlet extends HttpServlet {
-    StudentService studentService = new StudentServiceImpl();
+@WebServlet(name = "teacherServlet", value = "/teachers/*")
+public class TeacherServlet extends HttpServlet {
+    TeacherService teacherService = new TeacherServiceImpl();
 
     private static final long serialVersionUID = 1L;
 
-    public void init() {}
+    public void init() {
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -33,23 +37,23 @@ public class StudentsServlet extends HttpServlet {
 
         try {
             switch (action) {
-                case "students/new":
+                case "teachers/new":
                     showNewForm(request, response);
                     break;
-                case "students/insert":
-                    insertStudent(request, response);
+                case "teachers/insert":
+                    insertTeacher(request, response);
                     break;
-                case "students/delete":
-                    deleteStudent(request, response);
+                case "teachers/delete":
+                    deleteTeacher(request, response);
                     break;
-                case "students/edit":
+                case "teachers/edit":
                     showEditForm(request, response);
                     break;
-                case "students/update":
-                    updateStudent(request, response);
+                case "teachers/update":
+                    updateTeacher(request, response);
                     break;
                 default:
-                    listStudents(request, response);
+                    listTeacher(request, response);
                     break;
             }
         } catch (SQLException ex) {
@@ -57,35 +61,34 @@ public class StudentsServlet extends HttpServlet {
         }
     }
 
-    private void listStudents(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        List<Student> students = studentService.getAll();
-        request.setAttribute("students", students);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student-list.jsp");
+    private void listTeacher(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        List<Teacher> teacher = teacherService.getAll();
+        request.setAttribute("teacher", teacher);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("teacher-list.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("action", "insert");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("teacher-form.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Student existingStudent = studentService.getOne(id);
+        Teacher existingTeacher = teacherService.getOne(id);
         request.setAttribute("id", id);
-        request.setAttribute("student", existingStudent);
+        request.setAttribute("teacher", existingTeacher);
         request.setAttribute("action", "update");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("teacher-form.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void insertStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void insertTeacher(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String phoneNumber = request.getParameter("phone_number");
         String birthDate = request.getParameter("birthdate");
-        String pincode = request.getParameter("pincode");
         LocalDateTime dateNow = LocalDateTime.now();
 
         // pare string to date
@@ -98,27 +101,25 @@ public class StudentsServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Student newStudent = new Student();
-        newStudent.setName(name);
-        newStudent.setSurname(surname);
-        newStudent.setFullName();
-        newStudent.setPhoneNumber(phoneNumber);
-        newStudent.setBirthDate(parsedBirthDate);
-        newStudent.setPinCode(pincode);
-        newStudent.setCreateDate(dateNow);
-        newStudent.setUpdateDate(dateNow);
-        studentService.add(newStudent);
+        Teacher newTeacher = new Teacher();
+        newTeacher.setName(name);
+        newTeacher.setSurname(surname);
+        newTeacher.setFullName();
+        newTeacher.setPhoneNumber(phoneNumber);
+        newTeacher.setBirthDate(parsedBirthDate);
+        newTeacher.setCreateDate(dateNow);
+        newTeacher.setUpdateDate(dateNow);
+        teacherService.add(new Teacher());
         response.sendRedirect("/list");
     }
 
-    private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void updateTeacher(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String phoneNumber = request.getParameter("phone_number");
         String birthDate = request.getParameter("birthdate");
-        String pincode = request.getParameter("pincode");
         long id = Long.parseLong(request.getParameter("id"));
-        Student currentStudent = studentService.getOne(id);
+        Teacher currentTeacher = teacherService.getOne(id);
         LocalDateTime dateNow = LocalDateTime.now();
 
         // pare string to date
@@ -131,19 +132,18 @@ public class StudentsServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        currentStudent.setName(name);
-        currentStudent.setSurname(surname);
-        currentStudent.setPhoneNumber(phoneNumber);
-        currentStudent.setBirthDate(parsedBirthDate);
-        currentStudent.setPinCode(pincode);
-        currentStudent.setUpdateDate(dateNow);
-        studentService.update(currentStudent);
+        currentTeacher.setName(name);
+        currentTeacher.setSurname(surname);
+        currentTeacher.setPhoneNumber(phoneNumber);
+        currentTeacher.setBirthDate(parsedBirthDate);
+        currentTeacher.setUpdateDate(dateNow);
+        teacherService.update(currentTeacher);
         response.sendRedirect("/list");
     }
 
-    private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void deleteTeacher(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         long id = Long.parseLong(request.getParameter("id"));
-        studentService.deleteById(id);
+        teacherService.deleteById(id);
         response.sendRedirect("list");
     }
 }

@@ -8,7 +8,7 @@ public abstract class DatabaseConnection {
 
     private static final String URL = "jdbc:mysql://localhost:3306/bdc_course";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "@dolphin888";
+    private static final String PASSWORD = "5524";
 
     public Connection connect(){
         try {
