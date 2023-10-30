@@ -11,6 +11,8 @@
     <title>Course Reporter</title>
 </head>
 <body>
-<a href="/students/list" style="font-size: 16px">Student List</a>
+<a href="/students/list" style="font-size: 16px"> Student List</a>
+<a href="/teachers/list" style="font-size: 16px"> Teacher List</a>
 </body>
 </html>
+
