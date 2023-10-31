@@ -1,20 +1,21 @@
 package az.bdc.coursereporterjsp.service;
 
+import az.bdc.coursereporterjsp.domain.Student;
 import az.bdc.coursereporterjsp.domain.Teacher;
 
 import java.util.List;
 
 public interface TeacherService {
 
-    List<Teacher> getAll();
+        List<Teacher> getAll();
 
-    boolean add(Teacher teacher);
+        boolean add(Teacher teacher);
 
-    boolean update(Teacher teacher);
+        boolean update(Teacher  teacher);
 
-    boolean deleteById(long id);
+        boolean deleteById(long id);
 
-    Teacher getOne(long id);
+        Teacher getOne(long id);
 
-}
+    }
 
