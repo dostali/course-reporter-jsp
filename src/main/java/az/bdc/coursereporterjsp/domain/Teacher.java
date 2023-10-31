@@ -24,7 +24,7 @@ public class Teacher {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.fullName = fullName;
+        this.fullName = fullName + " "+ this.surname;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.createDate = createDate;
@@ -83,7 +83,6 @@ public class Teacher {
         public void setPhoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
         }
-
 
         public LocalDateTime getCreateDate() {
             return createDate;

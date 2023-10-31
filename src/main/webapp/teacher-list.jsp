@@ -18,7 +18,7 @@
 <div style="text-align: center;">
     <h1>Teacher Management</h1>
     <h2>
-        <a href="/new">Add New Teacher</a>
+        <a href="/teachers/new">Add New Teacher</a>
     </h2>
 </div>
 <div style="display:flex; justify-content:center; align-items: center">
@@ -40,8 +40,8 @@
             <td><%= ((Teacher)teacherList.get(i)).getPhoneNumber() %></td>
             <td><%= ((Teacher)teacherList.get(i)).getUpdateDate() %></td>
             <td>
-                <a href="/edit?id=<%= ((Teacher)teacherList.get(i)).getId() %>">Edit</a>
-                <a href="/delete?id=<%= ((Teacher)teacherList.get(i)).getId() %>">Delete</a>
+                <a href="/teachers/edit?id=<%= ((Teacher)teacherList.get(i)).getId() %>">Edit</a>
+                <a href="/teachers/delete?id=<%= ((Teacher)teacherList.get(i)).getId() %>">Delete</a>
             </td>
         </tr>
 

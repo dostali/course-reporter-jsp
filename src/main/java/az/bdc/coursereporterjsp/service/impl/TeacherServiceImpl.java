@@ -50,8 +50,8 @@ public class TeacherServiceImpl extends DatabaseConnection implements TeacherSer
             preparedStatement.setString(3, teacher.getFullName());
             preparedStatement.setObject(4, teacher.getBirthDate());
             preparedStatement.setString(5, teacher.getPhoneNumber());
-            preparedStatement.setObject(7, teacher.getCreateDate());
-            preparedStatement.setObject(8, teacher.getUpdateDate());
+            preparedStatement.setObject(6, teacher.getCreateDate());
+            preparedStatement.setObject(7, teacher.getUpdateDate());
             return preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,8 +68,8 @@ public class TeacherServiceImpl extends DatabaseConnection implements TeacherSer
             preparedStatement.setString(3, teacher.getFullName());
             preparedStatement.setObject(4, teacher.getBirthDate());
             preparedStatement.setString(5, teacher.getPhoneNumber());
-            preparedStatement.setObject(7, teacher.getUpdateDate());
-            preparedStatement.setLong(8, teacher.getId());
+            preparedStatement.setObject(6, teacher.getUpdateDate());
+            preparedStatement.setLong(7, teacher.getId());
             return preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

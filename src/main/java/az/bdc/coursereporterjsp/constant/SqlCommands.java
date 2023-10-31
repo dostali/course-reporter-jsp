@@ -11,7 +11,7 @@ public final class SqlCommands {
 
     }
     public static class Teacher {
-        public final static String SELECT_ALL = "select * from teacher";
+        public final static String SELECT_ALL = "select * from teachers";
         public final static String INSERT_INTO = "insert into teachers(name, surname, fullname, birthdate, phone_number, create_date, update_date) values(?,?,?,?,?,?,?)";
         public final static String DELETE_BY_ID = "delete from teachers where id=?";
         public final static String UPDATE_SET = "update teachers set name=?, surname=?, fullname=?, birthdate=?, phone_number=?, update_date=? where id = ?";

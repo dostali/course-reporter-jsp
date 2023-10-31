@@ -11,7 +11,7 @@
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column">
     <h1>Course Management</h1>
     <h2>
-        <a href="/list">List All Teachers </a>
+        <a href="teachers/list">List All Teachers </a>
     </h2>
 </div>
 <div style="align-items: center">
@@ -23,12 +23,12 @@
         String action = request.getAttribute("action").toString();
     %>
 
-    <form action="<%=action%>" method="post">
+    <form action="/teachers/<%=action%>" method="post">
         <table style="border: 1px; padding: 5px">
             <caption>
                 <h2> <%= action.equals("update") ? "Edit Teacher" : "Add New Teacher" %> </h2>
             </caption>
-            <input type="hidden" name="id" value=${requestScope.student.getId()}>
+            <input type="hidden" name="id" value=${requestScope.teacher.getId()}>
             <tr>
                 <th>Name:</th>
                 <td>
