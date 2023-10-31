@@ -32,19 +32,19 @@ public class StudentsServlet extends HttpServlet {
 
         try {
             switch (action) {
-                case "students/new":
+                case "/new":
                     showNewForm(request, response);
                     break;
-                case "students/insert":
+                case "/insert":
                     insertStudent(request, response);
                     break;
-                case "students/delete":
+                case "/delete":
                     deleteStudent(request, response);
                     break;
-                case "students/edit":
+                case "/edit":
                     showEditForm(request, response);
                     break;
-                case "students/update":
+                case "/update":
                     updateStudent(request, response);
                     break;
                 case "/list":
